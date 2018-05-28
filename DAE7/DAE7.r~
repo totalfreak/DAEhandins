@@ -8,16 +8,6 @@ se <- function(x) {
     sqrt(sd(x)/length(x))
 }
 
-cohens_d <- function(x, y) {
-    lenX <- length(x) - 1
-    lenY <- length(y) - 1
-    meanDiff <- abs(mean(x) - mean(y))
-    csd <- lenX * var(x) + lenY * var(y)
-    csd <- csd/(lenX + lenY)
-    csd <- sqrt(csd)
-    
-    cd <- meanDiff/csd
-}
 
 # 1
 lambda <- 2
@@ -61,8 +51,8 @@ shapiro.test(chinese$x.us)
 ttest <- t.test(chinese$x.ch, chinese$x.us, alternative='greater', conf.level=0.99, mu=10.49732)
 ttest
 
-theD <- cohens_d(chinese$x.ch, chinese$x.us)
-theD
+
+
 
 
 
