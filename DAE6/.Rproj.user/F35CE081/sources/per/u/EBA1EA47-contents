@@ -1,0 +1,4 @@
+lambda1 = 1
+lambda4 = 4
+
+x = matrix(1:9, byrow = TRUE, nrow = 3)
