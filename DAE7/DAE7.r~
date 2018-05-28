@@ -8,6 +8,23 @@ se <- function(x) {
     sqrt(sd(x)/length(x))
 }
 
+cohens_d <- function(x, y) {
+    lenX <- length(x) - 1
+    lenY <- length(y) - 1
+    meanDiff <- abs(mean(x) - mean(y))
+    csd <- lenX * var(x) + lenY * var(y)
+    csd <- csd/(lenX + lenY)
+    csd <- sqrt(csd)
+    print("Cohen's D")
+    print(cd <- meanDiff/csd)
+}
+
+# function for error bars
+error.bar <- function(x, y, upper, lower=upper, length=0.1,...) {
+   if(length(x) != length(y) | length(y) !=length(lower) | length(lower) != length(upper))
+        stop("vectors must be same length")
+   arrows(x,y+upper, x, y-lower, angle=90, code=3, length=length, ...)
+}
 
 # 1
 lambda <- 2
@@ -17,11 +34,11 @@ N <- 40
 # a
 chinese <- readMat('ChineseEnglish.mat')
 print('Chinese mean and standard error')
-mean(chinese$x.ch)
-se(chinese$x.ch)
+chinese$x.ch.mean <- mean(chinese$x.ch)
+chinese$x.ch.se <- se(chinese$x.ch)
 print('American mean and standard error')
-mean(chinese$x.us)
-se(chinese$x.us)
+chinese$x.us.mean <- mean(chinese$x.us)
+chinese$x.us.mean <- se(chinese$x.us)
 png('DAE7-1a.png')
 hist(chinese$x.ch, xlim=c(4, 16), ylim=c(0, 14), xlab='x.ch & x.us',  main = paste("Histogram of", 'x.ch and x.us'), col = 'skyblue')
 hist(chinese$x.us, add=T, col = scales::alpha('red', .4))
@@ -50,6 +67,24 @@ shapiro.test(chinese$x.us)
 
 ttest <- t.test(chinese$x.ch, chinese$x.us, alternative='greater', conf.level=0.99, mu=10.49732)
 ttest
+
+# d
+# theD = 0.807 = big effect
+theD <- cohens_d(chinese$x.ch, chinese$x.us)
+
+# f
+plot(chinese$x.ch.mean)
+plot(chinese$x.us.mean, add=T)
+
+
+
+
+
+
+
+
+
+
 
 
 
