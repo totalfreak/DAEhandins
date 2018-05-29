@@ -120,8 +120,11 @@ print('After mean')
 after.mean # 93.82223
 # H0 = The weights will not have changed
 # H1 = The weights will have decreased
-t.test(weights$before, weights$after, alternative='less', conf.level=.95)
-# Can't reject null hypothesis based on t test, as t = -0.44416
+t.test(weights$before, weights$after, pair=T, alternative='less', conf.level=.95)
+# Do paired test to see if mean difference proofs weight loss.
+# Dependent as the samples are from the same people.
+# Can't reject null hypothesis based on t test, as t = -2.1433 and p-value = 0.02122, but can't accept alternative hypothesis either.
+# Maybe reformulate null hypothesis?
 
 
 
