@@ -118,17 +118,32 @@ print('Before.mean')
 before.mean # 92.42223
 print('After mean')
 after.mean # 93.82223
+# c
 # H0 = The weights will not have changed
 # H1 = The weights will have decreased
-t.test(weights$before, weights$after, pair=T, alternative='less', conf.level=.95)
+t.test(weights$before, weights$after, pair=T, alternative='less', conf.level=.95, mu=92.4223)
 # Do paired test to see if mean difference proofs weight loss.
 # Dependent as the samples are from the same people.
-# Can't reject null hypothesis based on t test, as t = -2.1433 and p-value = 0.02122, but can't accept alternative hypothesis either.
+# Reject null hypothesis based on t test, as t = -2.1433 and p-value = 0.02122, but can't accept alternative hypothesis either.
 # Maybe reformulate null hypothesis?
 
+# e
+sme <- apply(weights, 2, mean)
+ssem <- apply(weights, 2, sem)
+sme_ssem <- data.frame(mean = sme, sem = ssem, group=names(weights))
 
+png('DAE7-2e.png')
+ggplot(sme_ssem, aes(x = group, y = mean)) + geom_bar(stat = 'identity') + geom_errorbar(aes(ymin = mean - sem, ymax = mean + sem), width = .2, col='red') + xlab('Means') + ylab('Value')
+dev.off()
 
+# 3
+heights <- readMat('Dutchdanish.mat')
+heights <- data.frame(du=heights$x.du, da=heights$x.da)
+# a
+du.mean <- mean(heights$du)
+da.mean <- mean(heights$da)
 
+# b
 
 
 
